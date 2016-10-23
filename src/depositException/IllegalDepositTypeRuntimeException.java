@@ -1,13 +1,10 @@
 package depositException;
 
-/**
- * Created by DotinSchool2 on 9/4/2016.
- */
-public class IllegalDepositTypeException extends RuntimeException{
-    public IllegalDepositTypeException(){
+public class IllegalDepositTypeRuntimeException extends RuntimeException{
+    public IllegalDepositTypeRuntimeException(){
         super("IllegalDepositTypeException");
     }
-    public IllegalDepositTypeException(String msg){
+    public IllegalDepositTypeRuntimeException(String msg){
         super(msg);
     }
 }

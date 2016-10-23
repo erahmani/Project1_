@@ -1,14 +1,12 @@
-package depositException; /**
- * Created by DotinSchool2 on 9/5/2016.
- */
+package depositException;
 
 import deposit.Deposit;
-
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
 
 public class DepositValidationHandler extends Unmarshaller.Listener implements ValidationEventHandler {
+
     @Override
     public void afterUnmarshal(Object target, Object parent)   {
         super.afterUnmarshal(target, parent);
@@ -21,16 +19,16 @@ public class DepositValidationHandler extends Unmarshaller.Listener implements V
     public boolean handleEvent(ValidationEvent event) {
         try {
             throw event.getLinkedException();
-        }catch(depositException.IllegalDepositTypeException iDTE){
-            System.out.println(iDTE.getMessage());
+        } catch(IllegalDepositTypeRuntimeException e){
+            System.out.println(e.getMessage());
             return true;
-        }catch(depositException.IllegalDepositBalanceException iDBE){
-            System.out.println(iDBE.getMessage());
+        }catch(IllegalDepositBalanceRuntimeException e){
+            System.out.println(e.getMessage());
             return true;
-        }catch(depositException.IllegalDurationInDaysException iDIDE){
-            System.out.println(iDIDE.getMessage());
+        } catch(IllegalDurationInDaysRuntimeException e){
+            System.out.println(e.getMessage());
             return true;
-        }catch (Throwable throwable) {
+        } catch (Throwable throwable) {
             return false;
         }
     }

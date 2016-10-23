@@ -24,7 +24,7 @@
         <durationInDays>1000</durationInDays>
     </deposit>
     <deposit>
-        <customerNumber>658951</customerNumber>
+        <customerNumber>658956</customerNumber>
         <depositType>LongTerm</depositType>
         <depositBalance>545966600000</depositBalance>
         <durationInDays>-1</durationInDays>

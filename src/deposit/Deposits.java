@@ -1,15 +1,12 @@
 package deposit;
 
-import java.util.ArrayList;
-/**
- * Created by DotinSchool2 on 9/3/2016.
- */
-import java.util.Collections;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.Collections;
+
 
 @XmlRootElement(name = "deposits")
 @XmlAccessorType (XmlAccessType.FIELD)

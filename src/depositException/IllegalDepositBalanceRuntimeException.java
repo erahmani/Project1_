@@ -1,13 +1,11 @@
 package depositException;
 
-/**
- * Created by DotinSchool2 on 9/4/2016.
- */
-public class IllegalDepositBalanceException extends RuntimeException{
-    public IllegalDepositBalanceException(){
+
+public class IllegalDepositBalanceRuntimeException extends RuntimeException{
+    public IllegalDepositBalanceRuntimeException(){
         super("IllegalDepositBalanceException");
     }
-    public IllegalDepositBalanceException(String msg){
+    public IllegalDepositBalanceRuntimeException(String msg){
         super(msg);
     }
 }

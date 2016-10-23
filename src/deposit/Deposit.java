@@ -1,8 +1,6 @@
 package deposit;
 
-import exceptions.*;
-import exceptions.IllegalDepositTypeException;
-
+import depositException.*;
 import javax.xml.bind.annotation.*;
 import java.math.BigDecimal;
 
@@ -13,35 +11,40 @@ public class Deposit implements Comparable{
     private String customerNumber;
     private BigDecimal depositBalance;
     private Integer durationInDays;
+
     @XmlElement(name="customerNumber")
     private void setCustomerNumber(String customerNumber){
-           this.customerNumber = customerNumber;
+        this.customerNumber = customerNumber;
     }
     @XmlElement(name="depositType")
-    private void setDepositType(String depositType) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    private void setDepositType(String depositType) throws IllegalAccessException, InstantiationException {
         try {
-            this.depositType = (DepositType) Class.forName(depositType).newInstance();
-        } catch( ClassNotFoundException e ) {
-            throw new IllegalDepositTypeException("Illegal Deposit Type for Customer Number:" + customerNumber);
+            this.depositType = (DepositType) Class.forName(this.getClass().getPackage().getName()+"."+depositType).newInstance();
+        } catch(ClassNotFoundException e) {
+            throw new IllegalDepositTypeRuntimeException("Illegal Deposit Type for Customer Number:" + customerNumber);
         }
     }
     @XmlElement(name="depositBalance")
     private void setDepositBalance(BigDecimal depositBalance) {
-        if(depositBalance.compareTo(new BigDecimal(0)) < 0)
-            throw new IllegalDepositBalanceException("Illegal DepositBalance Exception for Customer Number:" + customerNumber);
+        if(depositBalance.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalDepositBalanceRuntimeException("Illegal Deposit Balance for Customer Number:" + customerNumber);
+        }
         this.depositBalance = depositBalance;
     }
     @XmlElement(name="durationInDays")
     private void setDurationInDays(Integer durationInDays) {
-        if(durationInDays.compareTo(0) <= 0)
-            throw new IllegalDepositBalanceException("Illegal DurationInDays Exception for Customer Number:" + customerNumber);
+        if(durationInDays <= 0) {
+            throw new IllegalDurationInDaysRuntimeException("Illegal Duration In Days for Customer Number:" + customerNumber);
+        }
         this.durationInDays = durationInDays;
     }
 
-    private BigDecimal computePayedInterest(){
-        if(depositType != null && depositBalance != null && durationInDays != null)
+    private BigDecimal computePayedInterest() {
+        try{
             return depositBalance.multiply(new BigDecimal((depositType.getInterestRate()*durationInDays)/36500));
-        return new BigDecimal(-1);
+        }catch(NullPointerException e){
+            return new BigDecimal(-1);
+        }
     }
 
     public void setPayedInterest(){
